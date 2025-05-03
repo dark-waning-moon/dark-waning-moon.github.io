@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/a879dd2ec7c94c7dae618a8c6ecc851e.gif">
 <meta property="article:published_time" content="2025-05-02T18:09:46.000Z">
-<meta property="article:modified_time" content="2025-05-03T02:35:46.083Z">
+<meta property="article:modified_time" content="2025-05-03T02:43:04.083Z">
 <meta property="article:author" content="xkxy">
 <meta property="article:tag" content="任务队列">
 <meta property="article:tag" content="线程池">
@@ -425,7 +425,7 @@
 </ul>
 <p>由于这两个玩意都比较坑，所以我推荐使用<code>snprintf</code>进行类型转换，没错就是我注释的部分，<u><em>不仅c语言原生自带，不用依赖外部库，且可移植性更好，支持所有格式</em></u></p>
 <p>&emsp;&emsp;但是话又说回来，即便我在字符串与整型间转来转去，但是这份代码可是能无任何报错、警告成功运行的哦🤪，原因是什么呢？欸🤓，我先卖个关子，你们看代码先思考一下，我在文章结尾再告诉你们🤭，那么接下来先看演示吧</p>
-<h2 id="四、运行实现（gif图）"><a href="#四、运行实现（gif图）" class="headerlink" title="四、运行实现（gif图）"></a>四、运行实现（gif图）</h2><p>&emsp;&emsp;这里特地加了sleep让消费者（任务执行），比生产者（添加任务进队列）慢一些，毕竟任务设置的太简单了（偷懒一下(～￣▽￣)～）<br><img src="https://i-blog.csdnimg.cn/direct/a879dd2ec7c94c7dae618a8c6ecc851e.gif" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="四、运行实现（gif图）"><a href="#四、运行实现（gif图）" class="headerlink" title="四、运行实现（gif图）"></a>四、运行实现（gif图）</h2><p>&emsp;&emsp;这里特地加了sleep让消费者（任务执行），比生产者（添加任务进队列）慢一些，毕竟任务设置的太简单了（偷懒一下(～￣▽￣)～）<br><img src="https://i-blog.csdnimg.cn/direct/a879dd2ec7c94c7dae618a8c6ecc851e.gif" srcset="/img/loading.gif" lazyload alt="https://i-blog.csdnimg.cn/direct/a879dd2ec7c94c7dae618a8c6ecc851e.gif"></p>
 <h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>&emsp;&emsp;揭晓答案了，为什么使用<code>uintptr_t、void*</code>等强转类型后代码还能正常执行，甚至输出都与纯<code>int</code>类型没差别呢？因为任务队列中传输的一直是 <code>uintptr_t</code> 类型。<code>main</code>函数初始化传入的是 <code>uintptr_t</code> ，传入队列后转化为 <code>void *</code>，中间遍历队列和最后任务执行时都将其又还原成了<code>uintptr_t</code> 无符号长整形，所以输出没有问题，代码完美运行<br>&emsp;&emsp;本章主要对线程池的构建与任务队列的基本概念，运行原理，代码构建进行了介绍，其中还拓展了一些在代码实操时可能遇到的问题，对其原因、解决方法进行分析了解，那么最后如果让你亲手实现一个动态线程池，你能实现吗？</p>
 
                 
